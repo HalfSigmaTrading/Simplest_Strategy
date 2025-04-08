@@ -1,0 +1,13 @@
+//@version=6
+strategy("Simplest Strategy", overlay=true, initial_capital=20000, default_qty_type=strategy.fixed, default_qty_value=1, margin_long=0, margin_short=0)
+tp = 20*4
+sl = 10*4
+// Enter long by market if current open is greater than previous high.
+if (open > high[1]) and  strategy.position_size == 0
+    strategy.order("Long", strategy.long, 1, limit= open-2)
+    strategy.exit("Exit", "Long", profit = tp, loss = sl)
+
+// Enter short if current open is lower than previous low.
+if (open < low[1]) and  strategy.position_size == 0
+    strategy.order("Short", strategy.short, 1, limit= open+2)
+    strategy.exit("Exit", "Short", profit = tp, loss = sl)
